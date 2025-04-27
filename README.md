@@ -1,41 +1,38 @@
-# baitapchuong3
-# Auto Backup Database Script
+Tự Động Sao Lưu Cơ Sở Dữ Liệu
+Kho lưu trữ này chứa một script Python thực hiện sao lưu file cơ sở dữ liệu .sql hoặc .sqlite3 hằng ngày vào lúc 00:00 và gửi email thông báo thành công hoặc thất bại.
 
-Một script Python đơn giản để tự động sao lưu các file database (`.sql`, `.sqlite3`) và gửi thông báo qua email.
+1. Cấu hình
+Tạo file email.env trong thư mục gốc (cùng cấp với backup_database.py).
 
-## Mô tả
+Thêm các biến môi trường sau (thay thế bằng thông tin của bạn):
 
-Script Python này được thiết kế để tự động sao lưu các file database có phần mở rộng `.sql` hoặc `.sqlite3` trong thư mục hiện tại. Các bản sao lưu sẽ được lưu trữ trong thư mục `backup_database` (tự động tạo nếu chưa tồn tại) với tên file bao gồm thời gian sao lưu. Sau mỗi lần sao lưu, script sẽ gửi một email thông báo (thành công, thất bại hoặc không tìm thấy file nào) đến địa chỉ email người nhận đã được cấu hình.
+EMAIL_SENDER=youremail@gmail.com
+EMAIL_PASSWORD=your_app_password
+EMAIL_RECEIVER=recipient@example.com
+Lưu ý: Tuyệt đối không commit hoặc push email.env lên GitHub. File này đã được liệt kê trong .gitignore.
 
-## Hướng dẫn sử dụng
+2. Cài đặt phụ thuộc
+Dùng pip để cài các gói cần thiết:
 
-**Yêu cầu:**
+pip install -r requirements.txt
+3. Chạy script thủ công
+Để kiểm thử việc sao lưu và gửi email:
 
-* Python 3.x đã được cài đặt.
-* Đã cài đặt các thư viện được liệt kê trong `requirements.txt`.
-
-**Cài đặt:**
-
-1.  Clone repository này về máy của bạn (nếu bạn có repository trên GitHub):
-    ```bash
-    git clone <link_repository_github_cua_ban>
-    cd <ten_repository_cua_ban>
-    ```
-2.  Tạo một file `.env` trong cùng thư mục với script `Baimau.py` và điền các thông tin email cần thiết:
-    ```
-    SENDER_EMAIL="your_email@gmail.com"
-    RECEIVER_EMAIL="recipient_email@example.com"
-    APP_PASSWORD="your_app_password"
-    ```
-    **Quan trọng:** Tuyệt đối không commit và push file `.env` lên GitHub để bảo mật thông tin email của bạn. File `.gitignore` đã được cấu hình để bỏ qua file này.
-3.  Cài đặt các thư viện cần thiết từ file `requirements.txt`:
-    ```bash
-    pip install -r requirements.txt
-    ```
-
-**Chạy script:**
-
-Để chạy script và kích hoạt lịch trình backup (hiện tại đang được đặt để chạy mỗi phút cho mục đích thử nghiệm), sử dụng lệnh sau trong terminal:
-
-```bash
-python Baimau.py
+python backup_database.py
+Nếu thành công, bạn sẽ nhận email chứa tên file backup.
+Nếu thất bại, bạn sẽ nhận email thông báo lỗi.
+4. Tự động với Task Scheduler trên Windows
+Mở Task Scheduler.
+Chọn Create Task.
+Tab General: đặt tên tác vụ (ví dụ: Database Backup).
+Tab Triggers: nhấn New..., chọn On a schedule, Daily, thời gian 00:00:00 AM.
+Tab Actions: nhấn New...:
+Action: Start a program
+Program/script: đường dẫn đến file python.exe, ví dụ:
+C:\path\to\python.exe
+Add arguments: đường dẫn đến script, ví dụ:
+D:\tudonghoaquytrinh\baitapvenhachuong3\backup_database.py
+Start in: thư mục chứa script, ví dụ:
+D:\tudonghoaquytrinh\baitapvenhachuong3
+Nhấn OK để lưu.
+Sau khi hoàn thành, script sẽ tự động chạy mỗi đêm lúc nửa đêm và gửi báo cáo qua email.
