@@ -28,7 +28,7 @@ pip install -r requirements.txt
 Để kiểm thử việc sao lưu và gửi email:
 
 ```bash
-python backup_database.py
+python baitapchuong3.py
 ```
 
 - Nếu thành công, bạn sẽ nhận email chứa tên file backup.
@@ -48,11 +48,12 @@ python backup_database.py
      ```
    - **Add arguments**: đường dẫn đến script, ví dụ:
      ```
-     D:\tudonghoaquytrinh\baitapvenhachuong3\backup_database.py
+   
+     D:\TĐHQT\baitapchuong3.py
      ```
    - **Start in**: thư mục chứa script, ví dụ:
      ```
-     D:\tudonghoaquytrinh\baitapvenhachuong3
+     D:\TDHQT\baitapchuong3
      ```
 6. Nhấn **OK** để lưu.
 
